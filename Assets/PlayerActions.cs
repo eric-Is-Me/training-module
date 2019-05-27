@@ -10,6 +10,7 @@ public class PlayerActions : MonoBehaviour {
 	private Slider healthBar;
 	private Text pointsText;
 	private Text healthText;
+	private Text gameOver;
 	public float speed;
 	private int curHealth;
 	public int maxHealth;
@@ -22,7 +23,9 @@ public class PlayerActions : MonoBehaviour {
 		healthBar = canvas.GetComponentInChildren<Slider> ();
 		healthText = canvas.GetComponentsInChildren<Text> () [0];
 		pointsText = canvas.GetComponentsInChildren<Text> () [1];
+		gameOver = canvas.GetComponentsInChildren<Text> () [2];
 
+		gameOver.gameObject.SetActive (false);
 		curHealth = maxHealth;
 		healthBar.maxValue = maxHealth;
 		healthBar.value = maxHealth;
@@ -42,13 +45,16 @@ public class PlayerActions : MonoBehaviour {
 	// Trigger event handlers for collision triggers
 	void OnTriggerEnter2D (Collider2D col){
 		if (col.name == "GoodObject") {
-			points += 1;
+			points = points + 1;
 			pointsText.text = "Points: " + points;
 		}
 		if (col.name == "BadObject"){
-			curHealth -= 1;
-			healthBar.value -= 1;
+			curHealth = curHealth - 1;
+			healthBar.value =  healthBar.value - 1;
 			healthText.text = curHealth + "/" + maxHealth;
+			if (curHealth == 0) {
+				gameOver.gameObject.SetActive (true);
+			}
 		}
 	}
 }
