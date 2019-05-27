@@ -14,6 +14,15 @@ public class PlayerActions : MonoBehaviour {
 
 		// Need 3 element vector since the object position has 3 parameters (x,y,z)
 		Vector3 move = new Vector3 (moveHorizontal, 0, 0);
-		player.MovePosition(player.transform.position + (move * speed))
+		player.MovePosition (player.transform.position + (move * speed));
+	}
+
+	void OnTriggerEnter2D (Collider2D col){
+		if (col.name == "GoodObject") {
+			Debug.Log ("got good object");
+		}
+		if (col.name == "BadObject"){
+			Debug.Log ("got bad object");
+		}
 	}
 }
